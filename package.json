@@ -1,0 +1,14 @@
+{
+  "name": "o3d-viewer-tauri",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare-viewer": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/prepare-viewer.ps1",
+    "build": "npm run prepare-viewer",
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.6.2"
+  }
+}
