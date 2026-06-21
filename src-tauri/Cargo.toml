@@ -1,0 +1,22 @@
+[package]
+name = "o3d_viewer"
+version = "0.1.0"
+description = "Offline desktop wrapper for Online 3D Viewer"
+authors = ["UP Clocked"]
+edition = "2021"
+
+[lib]
+name = "o3d_viewer_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[[bin]]
+name = "o3d-viewer"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2.6.2" }
+
+[dependencies]
+tauri = { version = "2.6.2" }
+http = "1.1"
+urlencoding = "2.1"

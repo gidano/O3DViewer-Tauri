@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "O3D Viewer",
+  "version": "0.18.0",
+  "identifier": "hu.gidano.o3dviewer",
+  "build": {
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../frontend-dist"
+  },
+  "app": {
+    "windows": [],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "nsis"
+    ],
+    "icon": [
+      "icons/icon.ico",
+      "icons/icon.png"
+    ],
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser",
+        "displayLanguageSelector": false
+      }
+    },
+    "fileAssociations": [
+      {
+        "ext": [
+          "stl",
+          "obj",
+          "3mf",
+          "3ds",
+          "dae",
+          "fbx",
+          "gltf",
+          "glb",
+          "ifc",
+          "iges",
+          "igs",
+          "step",
+          "stp",
+          "fcstd",
+          "ply",
+          "off",
+          "wrl",
+          "amf",
+          "bim",
+          "brep",
+          "3dm"
+        ],
+        "name": "3D model",
+        "description": "3D model file",
+        "mimeType": "application/octet-stream"
+      }
+    ]
+  }
+}
