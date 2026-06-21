@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "O3D Viewer",
-  "version": "0.1.1",
-  "identifier": "hu.clocked.o3dviewer",
+  "version": "0.18.0",
+  "identifier": "hu.gidano.o3dviewer",
   "build": {
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../frontend-dist"
