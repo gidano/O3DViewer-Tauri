@@ -5,7 +5,7 @@ $CacheRoot = Join-Path $ProjectRoot '.cache'
 $SourceRoot = Join-Path $CacheRoot 'Online3DViewer-0.18.0'
 $Archive = Join-Path $CacheRoot 'online3dviewer-0.18.0.zip'
 $DistRoot = Join-Path $ProjectRoot 'frontend-dist'
-$Marker = Join-Path $DistRoot '.prepared-0.18.0'
+$Marker = Join-Path $DistRoot '.prepared-0.18.0-file-open-v1'
 
 if (Test-Path $Marker) {
     Write-Host 'Online3DViewer 0.18.0 frontend already prepared.'
@@ -29,9 +29,30 @@ if (-not (Test-Path $SourceRoot)) {
     }
 }
 
+# Patch the upstream website only in the temporary build cache. The desktop wrapper starts
+# the page with ?open=model://... when Windows supplies a file path via an association.
+$UpstreamIndexJs = Join-Path $SourceRoot 'source/website/index.js'
+$UpstreamIndexJsText = Get-Content $UpstreamIndexJs -Raw
+$OriginalStart = 'website.Load (); }); } export function StartEmbed ()'
+$PatchedStart = @'
+website.Load ();
+        const desktopOpenUrl = new URLSearchParams (window.location.search).get ('open');
+        if (desktopOpenUrl !== null && desktopOpenUrl.length > 0) {
+            website.LoadModelFromUrlList ([desktopOpenUrl]);
+        }
+    }); } export function StartEmbed ()
+'@
+if ($UpstreamIndexJsText.Contains($OriginalStart)) {
+    $UpstreamIndexJsText = $UpstreamIndexJsText.Replace($OriginalStart, $PatchedStart.Trim())
+    Set-Content -Path $UpstreamIndexJs -Value $UpstreamIndexJsText -NoNewline
+} elseif (-not $UpstreamIndexJsText.Contains('desktopOpenUrl')) {
+    throw 'Could not apply the desktop file-open patch to Online3DViewer source.'
+}
+
 Push-Location $SourceRoot
 try {
     Write-Host 'Installing upstream build dependencies...'
+
     npm ci
     Write-Host 'Creating upstream production package...'
     npm run create_package
