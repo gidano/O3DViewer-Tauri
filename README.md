@@ -26,7 +26,7 @@ src-tauri\target\release\bundle\nsis\
 
 ## Megjegyzés a méretről
 
-A kis `o3dv.min.js` csomag önmagában csak az engine. A teljes offline változat tartalmazza az upstream `libs` könyvtárat is (CAD-importerek, WASM komponensek), ezért a végleges telepítő várhatóan jóval nagyobb: nagyságrendileg **40–60 MB**, nem 15–20 MB.
+A kis `o3dv.min.js` csomag önmagában csak az engine. A teljes offline változat tartalmazza az upstream `libs` könyvtárat is (CAD-importerek, WASM komponensek), ezért a végleges telepítő várhatóan **15–20 MB**.
 
 ## Licencek
 
