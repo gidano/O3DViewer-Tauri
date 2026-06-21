@@ -24,7 +24,11 @@ if (-not (Test-Path $SourceRoot)) {
     Expand-Archive -Path $Archive -DestinationPath $CacheRoot -Force
     $Extracted = Get-ChildItem $CacheRoot -Directory | Where-Object { $_.Name -like 'Online3DViewer-*' } | Select-Object -First 1
     if ($null -eq $Extracted) { throw 'Online3DViewer source archive could not be extracted.' }
-    Rename-Item -Path $Extracted.FullName -NewName 'Online3DViewer-0.18.0'
+    # GitHub's ZIP sometimes already extracts to the desired folder name.
+    # Rename only when the source and target are genuinely different paths.
+    if ($Extracted.FullName -ne $SourceRoot) {
+        Rename-Item -Path $Extracted.FullName -NewName 'Online3DViewer-0.18.0'
+    }
 }
 
 Push-Location $SourceRoot
